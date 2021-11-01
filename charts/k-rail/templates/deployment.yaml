@@ -28,7 +28,7 @@ webhooks:
         path: "/"
       caBundle: {{ b64enc $ca.Cert }}
     rules:
-      - operations: ["CREATE","DELETE","UPDATE","CONNECT"]
+      - operations: ["CREATE","UPDATE","CONNECT"]
         apiGroups: ["*"]
         apiVersions: ["*"]
         resources:
@@ -48,6 +48,11 @@ webhooks:
           - rolebindings
           - services
           - statefulsets
+      - operations: ["DELETE"]
+        apiGroups: ["*"]
+        apiVersions: ["*"]
+        resources:
+          - customresourcedefinitions
     failurePolicy: {{ print .Values.failurePolicy }}
   {{- if .Values.reinvocationPolicy }}
     reinvocationPolicy: {{  print .Values.reinvocationPolicy }}
